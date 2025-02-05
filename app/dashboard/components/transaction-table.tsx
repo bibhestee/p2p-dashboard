@@ -26,6 +26,7 @@ import { getTransactions } from "@/lib/request-handler";
 import TransactionTableSkeleton from "./table-skeleton";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { formatDate } from "@/lib/format-date";
 
 const TransactionTable = () => {
   const router = useRouter();
@@ -111,14 +112,15 @@ const TransactionTable = () => {
                   <Badge
                     variant="outline"
                     className={cn(
-                      TransactionStatusColor[transaction.status],
-                      `text-white`
+                      `text-${TransactionStatusColor[`${transaction.status}`]}`
                     )}
                   >
                     {transaction.status}
                   </Badge>
                 </TableCell>
-                <TableCell>{transaction.createdAt}</TableCell>
+                <TableCell>
+                  {formatDate(transaction.createdAt)}
+                </TableCell>
               </TableRow>
             ))
           )}

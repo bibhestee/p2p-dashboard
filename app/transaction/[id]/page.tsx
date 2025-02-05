@@ -11,6 +11,7 @@ import Link from "next/link";
 import React, { ReactElement, use, useEffect, useState } from "react";
 import TransactionContentSkeleton from "../components/content-skeleton";
 import { cn } from "@/lib/utils";
+import { formatDate } from "@/lib/format-date";
 
 const Page = ({
   params,
@@ -73,8 +74,8 @@ const Page = ({
                   <Badge
                     variant="outline"
                     className={cn(
-                      "text-white flex items-center gap-2 px-3 py-1",
-                      `bg-${TransactionStatusColor[`${transaction?.status}`]}`
+                      "flex items-center gap-2 px-3 py-1",
+                      `text-${TransactionStatusColor[`${transaction.status}`]}`
                     )}
                   >
                     <StatusIcon status={transaction.status} />
@@ -83,7 +84,7 @@ const Page = ({
                 </div>
                 <div className="flex justify-between items-center">
                   <span className="text-lg font-semibold">Timestamp</span>
-                  <span className="text-lg">{transaction.createdAt}</span>
+                  <span className="text-lg">{formatDate(transaction.createdAt)}</span>
                 </div>
               </CardContent>
             )
