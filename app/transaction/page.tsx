@@ -1,7 +1,7 @@
-import React, { ReactElement } from "react";
+import { redirect } from "next/navigation";
 
-const Page = (): ReactElement => {
-  return <div>Transaction</div>;
+const Page = () => {
+  redirect("/dashboard");
 };
 
 export default Page;
