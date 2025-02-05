@@ -21,9 +21,6 @@ export default function TransactionTableSkeleton() {
           <TableCell>
             <Skeleton className="h-4 w-20" />
           </TableCell>
-          <TableCell>
-            <Skeleton className="h-4 w-32" />
-          </TableCell>
         </TableRow>
       ))}
     </>

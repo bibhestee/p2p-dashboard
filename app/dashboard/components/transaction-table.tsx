@@ -26,7 +26,6 @@ import { getTransactions } from "@/lib/request-handler";
 import TransactionTableSkeleton from "./table-skeleton";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { formatDate } from "@/lib/format-date";
 import { Input } from "@/components/ui/input";
 
 const TransactionTable = () => {
@@ -114,7 +113,6 @@ const TransactionTable = () => {
             <TableHead>Receiver Name</TableHead>
             <TableHead>Amount</TableHead>
             <TableHead>Status</TableHead>
-            <TableHead>Timestamp</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -140,14 +138,15 @@ const TransactionTable = () => {
                     {transaction.status}
                   </Badge>
                 </TableCell>
-                <TableCell>{formatDate(transaction.createdAt)}</TableCell>
               </TableRow>
             ))
           )}
         </TableBody>
       </Table>
       {!isLoading && filteredTransactions.length === 0 && (
-        <div className="text-center py-4 text-gray-500">No transactions found matching your search criteria.</div>
+        <div className="text-center py-4 text-gray-500">
+          No transactions found matching your search criteria.
+        </div>
       )}
     </div>
   );
