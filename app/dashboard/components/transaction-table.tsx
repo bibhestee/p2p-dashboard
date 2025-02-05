@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Table,
   TableBody,
@@ -27,15 +27,33 @@ import TransactionTableSkeleton from "./table-skeleton";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { formatDate } from "@/lib/format-date";
+import { Input } from "@/components/ui/input";
 
 const TransactionTable = () => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(true);
   const [filter, setFilter] = useState<"All" | TransactionStatus>("All");
+  const [searchTerm, setSearchTerm] = useState("");
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [filteredTransactions, setFilteredTransactions] = useState<
     Transaction[]
   >([]);
+
+  useMemo(() => {
+    const filtered = transactions.filter((transaction) => {
+      const matchesFilter = filter === "All" || transaction.status === filter;
+      const matchesSearch =
+        transaction.id.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        transaction.senderName
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase()) ||
+        transaction.receiverName
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      return matchesFilter && matchesSearch;
+    });
+    setFilteredTransactions(filtered);
+  }, [filter, transactions, searchTerm]);
 
   useEffect(() => {
     async function fetchData() {
@@ -48,21 +66,13 @@ const TransactionTable = () => {
     setIsLoading(false);
   }, []);
 
-  useEffect(() => {
-    setFilteredTransactions(
-      transactions.filter(
-        (transaction) => filter === "All" || transaction.status === filter
-      )
-    );
-  }, [filter, transactions]);
-
   const handleRowClick = (id: string) => {
     router.push(`/transaction/${id}`);
   };
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center space-x-2">
+      <div className="flex flex-col gap-3 md:flex-row items-center space-x-2">
         <label htmlFor="status-filter" className="font-medium">
           Filter by Status:
         </label>
@@ -83,6 +93,18 @@ const TransactionTable = () => {
             <SelectItem value={TransactionStatus.Failed}>Failed</SelectItem>
           </SelectContent>
         </Select>
+
+        <div className="w-full sm:w-auto">
+          <Input
+            type="search"
+            placeholder="Search transactions..."
+            value={searchTerm}
+            onChange={(e: { target: { value: string } }) =>
+              setSearchTerm(e.target.value)
+            }
+            className="w-full sm:w-[300px]"
+          />
+        </div>
       </div>
       <Table>
         <TableHeader>
@@ -118,9 +140,7 @@ const TransactionTable = () => {
                     {transaction.status}
                   </Badge>
                 </TableCell>
-                <TableCell>
-                  {formatDate(transaction.createdAt)}
-                </TableCell>
+                <TableCell>{formatDate(transaction.createdAt)}</TableCell>
               </TableRow>
             ))
           )}
