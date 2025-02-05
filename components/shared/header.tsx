@@ -13,10 +13,10 @@ const Header = () => {
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center space-x-4">
           <Link href="/dashboard" className="text-2xl font-bold">
-            P2P Dashboard
+            P
           </Link>
           <nav>
-            <ul className="flex space-x-4">
+            <ul className="flex space-x-4 self-center">
               <li>
                 <Link href="/dashboard" className="hover:underline">
                   Home
