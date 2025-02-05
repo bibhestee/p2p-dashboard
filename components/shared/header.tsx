@@ -12,19 +12,11 @@ const Header = () => {
     <header className="bg-background border-b">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center space-x-4">
-          <Link href="/dashboard" className="text-2xl font-bold">
-            P
-          </Link>
           <nav>
             <ul className="flex space-x-4 self-center">
               <li>
-                <Link href="/dashboard" className="hover:underline">
+                <Link href="/" className="hover:underline">
                   Home
-                </Link>
-              </li>
-              <li>
-                <Link href="/create-transaction" className="hover:underline">
-                  Create Transaction
                 </Link>
               </li>
             </ul>

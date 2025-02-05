@@ -134,7 +134,7 @@ const TransactionTable = () => {
                   <Badge
                     variant="outline"
                     className={cn(
-                      `text-${TransactionStatusColor[`${transaction.status}`]}`
+                      `text-${TransactionStatusColor[transaction.status]}`
                     )}
                   >
                     {transaction.status}
@@ -146,6 +146,9 @@ const TransactionTable = () => {
           )}
         </TableBody>
       </Table>
+      {!isLoading && filteredTransactions.length === 0 && (
+        <div className="text-center py-4 text-gray-500">No transactions found matching your search criteria.</div>
+      )}
     </div>
   );
 };
